@@ -27,9 +27,10 @@
 
         }
 
-        function button2Pressed() {
+        $().ready(function () {
             doSelect();
-        }
+        });
+
 
         function button3Pressed() {
             doSearch();
@@ -78,8 +79,6 @@
     <br>
     tweet:<input id="tf2" type="textfield">
     <button onclick="button1Pressed()">tweet</button>
-    <br>
-    <button onclick="button2Pressed()">X</button>
     <br>
     <input id="tf3" type="textfield">
     <button onclick="button3Pressed()">検索</button>
