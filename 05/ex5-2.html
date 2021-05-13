@@ -28,9 +28,12 @@
         }
 
         $().ready(function () {
-            doSelect();
+            setInterval(tick, 2000);
         });
 
+        function tick() {
+            doSelect();
+        }
 
         function button3Pressed() {
             doSearch();
