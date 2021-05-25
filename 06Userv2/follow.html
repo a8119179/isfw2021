@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="../jquery.min.js"></script>
+    <script type="text/javascript" src="../settings.js"></script>
+    <script type="text/javascript" src="../osql.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            execSelect();
+        });
+
+
+        async function execSelect() {
+            var sql = 'select * from Users';
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<table border="1">';
+            for (var i = 0; i < objects.length; i++) {
+                html = html + '<tr>';
+                var object = objects[i];
+                html = html + '<td>' + object.id + '</td>';
+                html = html + '<td>' + object.name + '</td>';
+                html = html + '<td>' + `<button onclick="OnLinkClick2('${object.id}')">フォローする</button>` + '</td>';
+                html = html + '<td>' + `<button onclick="OnLinkClick('${object.id}');">削除</button>` + '</td>';
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('result').innerHTML = html;
+        }
+
+        async function OnLinkClick2(objectid) {
+            var userid = sessionStorage.getItem('userid');
+            var sql3 = `insert into Follows (fromid, toid) values ('${userid}', '${objectid}')`;
+            var objects_3 = await osql.connect(sql3);
+            console.log(objects_3);
+
+        }
+
+        async function OnLinkClick(userid) {
+            var sql2 = `delete from Users where id = "${userid}"`;
+            var object_2 = await osql.connect(sql2);
+            execSelect();
+        }
+    </script>
+
+</head>
+
+<body>
+    <h1>Users</h1>
+    <p id="result">xxxx</p>
+</body>
+
+</html>
